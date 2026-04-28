@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TJA File Player</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="converter.js" defer></script>
+    <script src="preview.js" defer></script>
+    <script src="game.js" defer></script>
+
+</head>
+<body>
+    <h1 id="hero">TJA File Player</h1>
+    <canvas id="game" width="1000" height="563">If you see this text, this browser does not support HTML Canvas. Please use another browser!</canvas>
+    <h2>Song Select</h2>
+    <div id="songSelect">There don't appear to be any songs :(<br> <!-- Placeholder text that will display if songs could not be retrieved-->
+        Either the server has no songs or the connection is not stable
+    </div>
+    <h3>Current TJA file (for debug purposes)</h3>
+    <code id="myTJA"></code>
+</body>
+</html>

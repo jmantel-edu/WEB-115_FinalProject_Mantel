@@ -1,0 +1,15 @@
+* {
+    background-color: #242423;
+    color: #DBD5B5;
+}
+#game {
+    align-self: center;
+}
+
+#hero {
+    background: linear-gradient(to right, #7CFEF0, #6BFFB8, #2CEAA3, #28965A, #2A6041);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 8px 8px linear-gradient(to right, #D1D1F0, #C7C7F0, #AEAEE6, #A1A1E3, #8585DE)
+}
