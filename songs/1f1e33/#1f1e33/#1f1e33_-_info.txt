@@ -1,9 +1,0 @@
-Title:       #1f1e33
-Artist(s):   かめりあ (Camellia)
-From:        Arcaea
-Charter(s):  bol
-Difficulty:  5/7/8/10/*
-Genre:       ゲームミュージック (Game Music)
-BPM:         181.0
-TJADB ID:    10045
-Last Update: 2020-08-24

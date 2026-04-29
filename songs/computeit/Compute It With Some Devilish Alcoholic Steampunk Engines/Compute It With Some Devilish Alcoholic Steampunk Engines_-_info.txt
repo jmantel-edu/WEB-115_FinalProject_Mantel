@@ -1,7 +1,0 @@
-Title:       Compute It With Some Devilish Alcoholic Steampunk Engines
-Artist(s):   かめりあ (Camellia)Charter(s):  Megi
-Difficulty:  */*/*/10/*
-Genre:       バラエティ (Variety)
-BPM:         165.0
-TJADB ID:    10337
-Last Update: 2021-10-04

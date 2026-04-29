@@ -1,7 +1,0 @@
-Title:       Garakuta Doll Play -Uncut Edition-
-Artist(s):   t+pazoliteCharter(s):  bol
-Difficulty:  5/7/8/10/10
-Genre:       バラエティ (Variety)
-BPM:         256.0
-TJADB ID:    10252
-Last Update: 2021-09-28

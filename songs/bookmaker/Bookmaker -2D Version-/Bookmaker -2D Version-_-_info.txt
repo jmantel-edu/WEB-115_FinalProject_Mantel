@@ -1,9 +1,0 @@
-Title:       Bookmaker -2D Version-
-Artist(s):   Kobaryo
-From:        Arcaea
-Charter(s):  bol
-Difficulty:  4/6/8/10/*
-Genre:       ゲームミュージック (Game Music)
-BPM:         175.0
-TJADB ID:    10088
-Last Update: 2021-07-21

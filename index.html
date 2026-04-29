@@ -13,9 +13,15 @@
 <body>
     <h1 id="hero">TJA File Player</h1>
     <canvas id="game" width="1000" height="563">If you see this text, this browser does not support HTML Canvas. Please use another browser!</canvas>
-    <h2>Song Select</h2>
-    <div id="songSelect">There don't appear to be any songs :(<br> <!-- Placeholder text that will display if songs could not be retrieved-->
-        Either the server has no songs or the connection is not stable
+    <h2>Preview</h2>
+    <div class="preview" id="preview"></div>
+    <h2>Upload a Song</h2>
+    <div id="songSelect">
+        <div id="uploadSection">
+            <input type="file" id="uploadTJA"><label for="uploadTJA">Upload TJA</label><br>
+            <input type="file" id="uploadSound"><label for="uploadSound">Upload Sound File</label>
+        </div>
+        <input type="button" id="addSong" value="Load Song">
     </div>
     <h3>Current TJA file (for debug purposes)</h3>
     <code id="myTJA"></code>

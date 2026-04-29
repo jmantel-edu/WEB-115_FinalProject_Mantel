@@ -1,9 +1,0 @@
-Title:       Ether Strike -“Divine Mercy” Extended-
-Artist(s):   Akira Complex
-From:        Arcaea
-Charter(s):  bol
-Difficulty:  4/5/7/10/*
-Genre:       ゲームミュージック (Game Music)
-BPM:         158.0
-TJADB ID:    10167
-Last Update: 2021-08-17

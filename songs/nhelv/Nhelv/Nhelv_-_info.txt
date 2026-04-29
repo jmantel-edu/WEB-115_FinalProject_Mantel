@@ -1,9 +1,0 @@
-Title:       Nhelv
-Artist(s):   Silentroom
-From:        Arcaea
-Charter(s):  bol
-Difficulty:  3/5/8/10/*
-Genre:       ゲームミュージック (Game Music)
-BPM:         174.59
-TJADB ID:    10039
-Last Update: 2021-05-28

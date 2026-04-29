@@ -1,9 +1,0 @@
-Title:       Ether Strike
-Artist(s):   Akira Complex
-From:        Arcaea
-Charter(s):  bol
-Difficulty:  3/5/7/10/*
-Genre:       ゲームミュージック (Game Music)
-BPM:         156.0
-TJADB ID:    10060
-Last Update: 2020-04-22

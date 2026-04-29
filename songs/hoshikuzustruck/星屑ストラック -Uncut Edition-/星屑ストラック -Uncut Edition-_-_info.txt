@@ -1,7 +1,0 @@
-Title:       星屑ストラック -Uncut Edition- (Hoshikuzu Struck -Uncut Edition-)
-Artist(s):   t+pazoliteCharter(s):  bol
-Difficulty:  5/7/8/10/*
-Genre:       ナムコオリジナル (Namco Original)
-BPM:         220.0
-TJADB ID:    10266
-Last Update: 2021-09-28

@@ -1,7 +1,0 @@
-Title:       Pineapple Spaceship
-Artist(s):   nanobiiCharter(s):  bol
-Difficulty:  3/4/5/6/9
-Genre:       バラエティ (Variety)
-BPM:         170.0
-TJADB ID:    10257
-Last Update: 2021-09-28
