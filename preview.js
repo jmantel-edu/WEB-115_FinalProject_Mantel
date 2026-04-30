@@ -3,6 +3,8 @@ class Preview {
     constructor(tja) {
       this.tja = tja
 
+      this.title = undefined;
+
       this.easy = undefined
       this.normal = undefined
       this.hard = undefined
@@ -14,7 +16,7 @@ class Preview {
 				try {
 					var next = this.tja[i+1]
 				} catch(error) {
-					// Don't do anything
+					// Prevent erroring out when accessing an index out of bounds while inspecting the last line
 				}
 				
         // Configure Difficulty Levels
@@ -22,27 +24,36 @@ class Preview {
           case "COURSE:Oni":
 						next = next.replace("LEVEL:", "");
 						this.oni = parseInt(next);
+            break;
 					case "COURSE:Hard":
 						next = next.replace("LEVEL:", "");
 						this.hard = parseInt(next);
+            break;
 					case "COURSE:Normal":
 						next = next.replace("LEVEL:", "");
 						this.normal = parseInt(next);
+            break;
 					case "COURSE:Easy":
 						next = next.replace("LEVEL:", "");
 						this.easy = parseInt(next);
-					case "COURSE:Ura":
+            break;
+					case "COURSE:Edit": // For Ura
 						next = next.replace("LEVEL:", "");
 						this.ura = parseInt(next);
+            break;
+        }
+
+        if (line.includes("TITLE:") && this.title == undefined) {
+          this.title = line.replace("TITLE:", "");
         }
       }
-			this.preview = `<h3 class="title"></h3>
+			this.preview = `<h3 class="title">${this.title}</h3>
         <div class="difficultyHolder">
-            <p class="easy">${this.easy}</p>
-            <p class="normal">${this.normal}</p>
-            <p class="hard">${this.hard}</p>
-            <p class="oni">${this.oni}</p>
-            <p class="ura">${this.ura}</p>
+            <p class="easy">${this.easy == undefined ? "--" : this.easy}</p>   
+            <p class="normal">${this.normal == undefined ? "--" : this.normal}</p>   
+            <p class="hard">${this.hard == undefined ? "--" : this.hard}</p>   
+            <p class="oni">${this.oni == undefined ? "--" : this.oni}</p>   
+            <p class="ura">${this.ura == undefined ? "--" : this.ura}</p>   
         </div>`
     }
 
@@ -67,9 +78,12 @@ document.getElementById('uploadTJA').onchange = function() {
       chart.push(fileContentArray[line]);
     }
     myPreview = new Preview(chart)
+    mySong = new Song(chart);
 		tjaDebugDisplay.innerHTML = fileContentArray.join("<br>")
+    myPreview.renderPreview();
   };
   reader.readAsText(file);
 };
 
 var myPreview;
+var mySong;

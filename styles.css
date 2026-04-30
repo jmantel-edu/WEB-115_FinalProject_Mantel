@@ -2,8 +2,9 @@
     background-color: #242423;
     color: #DBD5B5;
 }
-#game {
-    align-self: center;
+#cvHolder { /* Canvas Holder */
+    display: flex;
+    justify-content: center;
 }
 
 #hero {
@@ -23,6 +24,7 @@
 .preview .difficultyHolder {
     display: flex;
     flex-direction: row;
+    background-color: #DBD5B5;
 }
 .difficultyHolder .easy {
     color: #DD614A;
@@ -38,4 +40,9 @@
 }
 .difficultyHolder .ura {
     color: #55286F
+}
+.easy, .normal, .hard, .oni, .ura {
+    padding: 0px 24px 0px 24px;
+    background-color: #DBD5B5;
+    font-size: 24px;
 }
