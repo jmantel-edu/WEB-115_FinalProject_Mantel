@@ -22,31 +22,101 @@ class Song {
         // rawTJA is an array preprocessed by the line splitter in preview.js. 
         // No other modification is performed there other than splitting the file into each line
         this.parsedTJA; 
-        this.title;
-        this.subtitle;
-        this.bpm; // Measures / Sign * 4; where Measures is the amt of measures per min and Sign is the time sig
-        this.offset; // Offset to account for silence / filler at the beginning of an audio file to ensure song begins on beat
-        this.genre;
-        this.charter;
+        this.title = "Untitled Song";
+        this.subtitle = "";
+        this.bpm = 120; // Measures / Sign * 4; where Measures is the amt of measures per min and Sign is the time sig
+        this.offset = 0; // Offset to account for silence / filler at the beginning of an audio file to ensure song begins on beat
+        this.genre = "";
+        this.charter = "";
+        this.headscroll = 1;
         this.balloons; // Balloon goals are predefined in the BALLOON: header at the beginning of the file
         this.lyrics; // STRETCH GOAL: Lyrics are WebVTT files. Implement a preexisting WebVTT parser from the internet to read and render lyrics. https://github.com/w3c/webvtt.js/
-
     }
 
-    parseTJA() {
-        let bpm = this.bpm;
-        let timing = this.offset;
+    parseTJAHeaders() {
+        // The structure of this was mostly referenced from the Python script I used to create charts in my midterm project
         let tja = this.tja;
 
         for (let i = 0; i < tja.length; i++) {
+            var lineIsHeader = false; // Flag that if true will continue to next iteration before trying to process line as notes
+            var line = tja[i];
+            try {
+                var next = tja[i+1];
+            } catch(error) {
+                // --
+            }
 
+        // Metadata parsing
+        switch(line.trim()) {
+            // Title
+            case line.startsWith("TITLE:"):
+                lineIsHeader = true;
+                this.title = line.replace("TITLE:", "");
+                break;
+            // Subtitle
+            case line.startsWith("SUBTITLE:"):
+                lineIsHeader = true;
+                this.subtitle = line.replace("SUBTITLE:", "");
+                break;
+            // BPM
+            case line.startsWith("BPM:"):
+                lineIsHeader = true;
+                this.bpm = parseInt(line.replace("BPM:", ""));
+                break;
+            // Offset
+            case line.startsWith("OFFSET:"):
+                lineIsHeader = true;
+                this.offset = parseFloat(line.replace("OFFSET:", ""));
+                break;
+            // Genre
+            case line.startsWith("GENRE:"):
+                lineIsHeader = true;
+                this.genre = line.replace("GENRE:", "");
+                break;
+            // Charter
+            case line.startsWith("MAKER:"):
+                lineIsHeader = true;
+                this.charter = line.replace("MAKER:", "");
+                break;
+            // Headscroll
+            case line.startsWith("HEADSCROLL:"):
+                lineIsHeader = true;
+                this.headscroll = parseFloat(line.replace("HEADSCROLL:", ""));
+                break;
+            // Lyrics
+
+            }
         }
     }
+
 }
 
 class Chart extends Song {
     constructor() {
-        this.difficulty; // Values: "Easy", "Normal", "Hard", "Oni", "Ura"       
+        this.difficulty; // Values: "Easy", "Normal", "Hard", "Oni", "Ura"
+        this.chart = []
+    }
+
+    parseTJAChart() {
+        let bpm = this.bpm;
+        let offset = this.offset;
+        let rt = offset*1000
+
+        // Checking if the headers indicating the start of the chart representing the Chart.difficulty have been found, otherwise chart data will not be read
+        let foundDiff = false;
+        let started = false;
+
+        for (let i = 0; i < tja.length; i++) {
+            var lineIsHeader = false; // Flag that if true will continue to next iteration before trying to process line as notes
+            var line = tja[i];
+            try {
+                var next = tja[i+1];
+            } catch(error) {
+                // --
+            }
+
+            
+        }
     }
 }
 
