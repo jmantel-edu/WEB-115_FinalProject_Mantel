@@ -16,3 +16,10 @@ function start() {
     c.fillText("Upload a Song below", 100, 100);
 }
 start();
+
+function game() {
+
+    // pixel_position_of_note:
+    //     let x = BPM/240000*scroll_speed*(screen_width - 150)
+    //     return 150+(x - current_time) + scroll_speed
+}
