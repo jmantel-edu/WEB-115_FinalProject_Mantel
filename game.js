@@ -17,7 +17,7 @@ function start() {
 }
 start();
 
-function game() {
+function gameLoop(timestamp) {
 
     // pixel_position_of_note:
     //     let x = BPM/240000*scroll_speed*(screen_width - 150)

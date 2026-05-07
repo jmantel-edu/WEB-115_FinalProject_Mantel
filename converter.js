@@ -98,9 +98,10 @@ class Song {
 }
 
 class Chart extends Song {
-    constructor(tja, difficulty) {
+    constructor(tja, difficulty, bpm, offset, headscroll) {
         super(tja);
         this.difficulty = difficulty; // Values: "Easy", "Normal", "Hard", "Oni", "Edit"
+        this.chart = []
     }
 
     parseTJAChart() {
@@ -140,17 +141,17 @@ class Chart extends Song {
             if (line.startsWith("BALLOON:")) {
                 balloons = line.replace("BALLOON:", "").split(",")
             }
-            if (foundDiff != false && line=="#START") {
+            if (foundDiff != true && line=="#START") {
                 started = i;
             }
-            if (foundDiff != false && line=="#END") {
+            if (foundDiff != true && line=="#END") {
                 ended = i;
             }
             
         }
 
         // Actual content parsing
-        for (let i = started; i < ended; i++) { // i starts at the #START header and ends at the #END header as detected in the previous For loop
+        for (let i = started+1; i < ended; i++) { // i starts at the #START header and ends at the #END header as detected in the previous For loop
             var lineIsHeader = false; // Flag that if true will continue to next iteration before trying to process line as notes
             var line = tja[i];
             try {
@@ -161,22 +162,29 @@ class Chart extends Song {
 
             var measure = [];
             var overflow = -1; // Used for measures spanning multiple lines
-            do {
-                console.log(tja[i+overflow+1])
-                measure.concat(tja[i+overflow+1]);
-                console.log(measure[overflow])
-                overflow += 1
-            } while (measure[-1].endsWith(","))
+            if (line.endsWith(",")) {
+                console.log("Analyzed line: " + line);
+                measure = line.split("");
+            } else {
+                do {
+                    console.log(tja[i+overflow+1])
+                    measure.push(tja[i+overflow+1]);
+                    console.log(measure);
+                    console.log(measure[overflow]);
+                    overflow += 1
+                } while (measure[measure.length - 1].endsWith(","));
+            }
+            
 
 
             // Actually parsing some notes for real this time. Sorry for any fake-outs
             for (let j in measure) { // Beat in Measure
                 let msPerMeasure = (60000 * 4 * timesig) / bpm; // Recalculate the msPerMeasure
-                if (measure.trim() == ",") { // Used for empty measures when there's only a comma
+                if (measure == [","]) { // Used for empty measures when there's only a comma
                     rt += msPerMeasure;
                     break;
                 }
-                if (measure.trim() == "") { // For empty lines; these lines have no significance and can be skipped
+                if (measure == [""]) { // For empty lines; these lines have no significance and can be skipped
                     break;
                 }
                 const char = measure[j];
@@ -194,38 +202,39 @@ class Chart extends Song {
                     */
                     case "1":
                         this.chart.push(new Don(rt, bpm, scrollSpeed, false));
-                        console.log("Added new Don");
+                        console.log("Added new Don, timing: ", rt, ", BPM: ", bpm);
                         break;
                     case "2":
                         this.chart.push(new Ka(rt, bpm, scrollSpeed, false));
-                        console.log("Added new Ka");
+                        console.log("Added new Ka, timing: ", rt, ", BPM: ", bpm);
                         break;
                     case "3":
                     case "A":
                         this.chart.push(new Don(rt, bpm, scrollSpeed, true))
-                        console.log("Added new big Don");
+                        console.log("Added new big Don, timing: ", rt, ", BPM: ", bpm);
                         break;
                     case "4":
                     case "B":
                         this.chart.push(new Ka(rt, bpm, scrollSpeed, true));
-                        console.log("Added new big Ka")
+                        console.log("Added new big Ka, timing: ", rt, ", BPM: ", bpm)
                         break;
                     case "5":
                         this.chart.push(new HeadRoll(rt, bpm, scrollSpeed, false));
-                        console.log("Added new Drumroll");
+                        console.log("Added new Drumroll, timing: ", rt, ", BPM: ", bpm);
                         break;  
                     case "6":
                         this.chart.push(new HeadRoll(rt, bpm, scrollSpeed, true));
-                        console.log("Added new big Drumroll");
+                        console.log("Added new big Drumroll, timing: ", rt, ", BPM: ", bpm);
                         break;
                     case "7":
                     case "9":
                         this.chart.push(new Balloon(rt, bpm, scrollSpeed, balloons[balloonIndex]));
                         balloonIndex++;
-                        console.log("Added new Balloon");
+                        console.log("Added new Balloon, timing: ", rt, ", BPM: ", bpm);
                         break;
                     case "8":
                         this.chart.push(new EndRoll(rt, bpm, scrollSpeed))
+                        console.log("Added new Balloon End, timing: ", rt, ", BPM: ", bpm)
                         break;
 
                     if (j.startsWith("#")) {
@@ -241,6 +250,8 @@ class Chart extends Song {
 
                 }
                 rt += msPerMeasure / (j.length - 1); // Comma at end denotes end of measure
+                overflow != -1 ? i += overflow + 1 : i += 0;
+                overflow = -1
             }
 
         }
@@ -309,11 +320,11 @@ class Balloon extends Note {
 
 class EndRoll extends Note {
     constructor(timing, bpmAtNote, speed) {
-        super(timing, bpmAtNote, isBig)
+        super(timing, bpmAtNote, speed)
         this.timing = timing;
         this.bpm = bpmAtNote;
         this.scrollSpeed = speed;
-        this.isBig = isBig;
+        this.isBig = false;
         this.type = "endroll";
     }
 }
@@ -328,30 +339,30 @@ class Barline extends Note { // STRETCH GOAL: Create and implement Barlines
 document.getElementById("ura").addEventListener("click", function () {
     console.log("Load Song pressed");
     mySong.parseTJAHeaders();
-    myChart = new Chart(mySong.rawTJA, "Edit");
+    myChart = new Chart(mySong.rawTJA, "Edit", mySong.bpm, mySong.offset, mySong.headscroll);
     myChart.parseTJAChart();
 } )
 document.getElementById("oni").addEventListener("click", function () {
     console.log("Load Song pressed");
     mySong.parseTJAHeaders();
-    myChart = new Chart(mySong.rawTJA, "Oni");
+    myChart = new Chart(mySong.rawTJA, "Oni", mySong.bpm, mySong.offset, mySong.headscroll);
     myChart.parseTJAChart();
 } )
 document.getElementById("hard").addEventListener("click", function () {
     console.log("Load Song pressed");
     mySong.parseTJAHeaders();
-    myChart = new Chart(mySong.rawTJA, "Hard");
+    myChart = new Chart(mySong.rawTJA, "Hard", mySong.bpm, mySong.offset, mySong.headscroll);
     myChart.parseTJAChart();
 } )
 document.getElementById("normal").addEventListener("click", function () {
     console.log("Load Song pressed");
     mySong.parseTJAHeaders();
-    myChart = new Chart(mySong.rawTJA, "Normal");
+    myChart = new Chart(mySong.rawTJA, "Normal", mySong.bpm, mySong.offset, mySong.headscroll);
     myChart.parseTJAChart();
 } )
 document.getElementById("easy").addEventListener("click", function () {
     console.log("Load Song pressed");
     mySong.parseTJAHeaders();
-    myChart = new Chart(mySong.rawTJA, "Easy");
+    myChart = new Chart(mySong.rawTJA, "Easy", mySong.bpm, mySong.offset, mySong.headscroll);
     myChart.parseTJAChart();
 } )
